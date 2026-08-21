@@ -17,6 +17,10 @@ backend-java/target/
 *.war
 *.ear
 
+# Personal Resume (Keep Local)
+Resume_Software_Engineer.md
+*.resume.*
+
 # Logs & Temporary Files
 npm-debug.log*
 yarn-debug.log*
