@@ -50,25 +50,20 @@
 
 ## ✨ Key Engineering Highlights
 
-### 1. 📍 Haversine Geodesic Distance Engine
-Implemented the mathematical **Haversine formula** in pure Java (`ListingServiceImpl.java`) to compute great-circle distances between user latitude/longitude coordinates and listed luxury properties:
-$$\text{distance} = 2R \cdot \arcsin\left(\sqrt{\sin^2\left(\frac{\Delta \text{lat}}{2}\right) + \cos(\text{lat}_1)\cos(\text{lat}_2)\sin^2\left(\frac{\Delta \text{lon}}{2}\right)}\right)$$
-Enables sub-millisecond radius filtering (e.g., within 10 km, 50 km, or nationwide).
-
-### 2. 🧾 Automated 12% GST Compliance & Promo Code Engine
+### 1. 🧾 Automated 12% GST Compliance & Promo Code Engine
 - **Server-Side Authoritative Pricing:** Eliminates client payload tampering by recalculating nightly room rates directly from database entities.
 - **Tax Breakdown:** Enforces statutory **12% GST (6% CGST + 6% SGST)** on room reservations and optional in-room dining packages.
 - **Dynamic Promo Engine:** Supports percentage-based (`PERCENTAGE` with max caps) and flat deduction (`FLAT`) coupon validation.
 
-### 3. 🛡️ Anti-Scam Offline Cash Handshake Protocol
+### 2. 🛡️ Anti-Scam Offline Cash Handshake Protocol
 To eliminate guest-host payment disputes for cash-on-arrival transactions, the system features a **Dual-Party Digital Handshake**:
 - Records currency note denominations (₹500, ₹200, ₹100, ₹50) during check-in.
 - Generates shared immutable tax invoices (`BILL-XXXXX`) and transaction audit trails.
 
-### 4. 📱 Dynamic UPI QR Code Payment Simulator
+### 3. 📱 Dynamic UPI QR Code Payment Simulator
 Integrated instant UPI QR code generation (Google Pay, PhonePe, Paytm, BHIM) with a 5-minute countdown timer and NPCI bank escrow verification simulation.
 
-### 5. 🔐 Stateless JWT Security Architecture
+### 4. 🔐 Stateless JWT Security Architecture
 - Spring Security 6 filter chain with `OncePerRequestFilter`.
 - BCrypt password hashing for secure authentication.
 - Strict Role-Based Access Control (`GUEST`, `HOST`, `RESTAURANT`, `ADMIN`).
