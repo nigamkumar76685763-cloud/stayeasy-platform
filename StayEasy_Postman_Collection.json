@@ -1,0 +1,355 @@
+{
+  "info": {
+    "_postman_id": "stayeasy-api-collection-2026",
+    "name": "StayEasy Full-Stack API Suite 🇮🇳",
+    "description": "Complete Postman API Collection for StayEasy — Luxury Room Booking + Cloud Kitchen Food Delivery platform with Spring Security 6 & JWT.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "jwtToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication & Wallet",
+      "item": [
+        {
+          "name": "Login as Guest (Get JWT)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"aarav@stayeasy.com\",\n  \"password\": \"pass123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Login as Host (Get JWT)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"vikram@oberoihotels.in\",\n  \"password\": \"host123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Register New User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Rohan Verma\",\n  \"email\": \"rohan@gmail.com\",\n  \"phone\": \"+91 99887 76655\",\n  \"password\": \"rohanSecurePass123\",\n  \"role\": \"GUEST\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Get User Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/profile/usr_guest_01",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "profile", "usr_guest_01"]
+            }
+          }
+        },
+        {
+          "name": "Add Wallet Balance via UPI (₹1,500)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/wallet/add?userId=usr_guest_01&amount=1500",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "wallet", "add"],
+              "query": [
+                { "key": "userId", "value": "usr_guest_01" },
+                { "key": "amount", "value": "1500" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "[Security Test] Attack with Negative Wallet Amount (-5000)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/wallet/add?userId=usr_guest_01&amount=-5000",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "wallet", "add"],
+              "query": [
+                { "key": "userId", "value": "usr_guest_01" },
+                { "key": "amount", "value": "-5000" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Luxury Rooms & Stays",
+      "item": [
+        {
+          "name": "Get All Active Stays",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/listings",
+              "host": ["{{baseUrl}}"],
+              "path": ["listings"]
+            }
+          }
+        },
+        {
+          "name": "Search Stays by GPS Location & Radius (Nearby Radar)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/listings/nearby?lat=15.5173&lng=73.7628&radiusKm=50",
+              "host": ["{{baseUrl}}"],
+              "path": ["listings", "nearby"],
+              "query": [
+                { "key": "lat", "value": "15.5173" },
+                { "key": "lng", "value": "73.7628" },
+                { "key": "radiusKm", "value": "50" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter Stays by City (Goa)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/listings/city/Goa",
+              "host": ["{{baseUrl}}"],
+              "path": ["listings", "city", "Goa"]
+            }
+          }
+        },
+        {
+          "name": "Get Stay by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/listings/prop_1",
+              "host": ["{{baseUrl}}"],
+              "path": ["listings", "prop_1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Offers & Promo Codes",
+      "item": [
+        {
+          "name": "Get All Active Offers",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/offers",
+              "host": ["{{baseUrl}}"],
+              "path": ["offers"]
+            }
+          }
+        },
+        {
+          "name": "Validate Coupon (DIWALI25 on ₹8,000 subtotal)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"DIWALI25\",\n  \"amount\": 8000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/offers/validate",
+              "host": ["{{baseUrl}}"],
+              "path": ["offers", "validate"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Gourmet Food & Restaurants",
+      "item": [
+        {
+          "name": "Get All Open Cloud Kitchens",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/restaurants",
+              "host": ["{{baseUrl}}"],
+              "path": ["restaurants"]
+            }
+          }
+        },
+        {
+          "name": "Get Restaurant Menu Items",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/restaurants/rest_1/menu",
+              "host": ["{{baseUrl}}"],
+              "path": ["restaurants", "rest_1", "menu"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Room Bookings (Protected)",
+      "item": [
+        {
+          "name": "Create Luxury Room Reservation (With 12% GST & Coupon)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"listingId\": \"prop_1\",\n  \"listingTitle\": \"Signature Oceanview Presidential Suite\",\n  \"listingImage\": \"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b\",\n  \"city\": \"Goa\",\n  \"guestId\": \"usr_guest_01\",\n  \"guestName\": \"Aarav Sharma\",\n  \"guestEmail\": \"aarav@stayeasy.com\",\n  \"guestPhone\": \"+91 98765 43210\",\n  \"checkIn\": \"2026-09-10\",\n  \"checkOut\": \"2026-09-13\",\n  \"guestsCount\": 2,\n  \"roomsCount\": 1,\n  \"foodOption\": true,\n  \"couponCode\": \"DIWALI25\",\n  \"paymentMode\": \"ONLINE\",\n  \"paymentMethod\": \"UPI\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bookings",
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings"]
+            }
+          }
+        },
+        {
+          "name": "Get All Bookings",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/bookings",
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Food Orders & Deliveries (Protected)",
+      "item": [
+        {
+          "name": "Place Food Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"guestId\": \"usr_guest_01\",\n  \"guestName\": \"Aarav Sharma\",\n  \"restaurantId\": \"rest_1\",\n  \"restaurantName\": \"Dum Pukht & Dastarkhwan\",\n  \"deliveryAddress\": \"Suite 402, North Goa Beach Resort\",\n  \"itemsJson\": \"[{\\\"name\\\":\\\"Royal Awadhi Gosht Biryani\\\",\\\"qty\\\":2,\\\"price\\\":680}]\",\n  \"subtotal\": 1360,\n  \"tax\": 68,\n  \"deliveryFee\": 0,\n  \"totalAmount\": 1428,\n  \"paymentMode\": \"ONLINE\",\n  \"paymentMethod\": \"UPI\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders"]
+            }
+          }
+        },
+        {
+          "name": "Get All Food Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Payments & Tax Invoicing (Protected)",
+      "item": [
+        {
+          "name": "Get All Payment Invoices",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/payments",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments"]
+            }
+          }
+        },
+        {
+          "name": "Confirm Offline Cash Payment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/payments/pay_002/confirm-cash",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments", "pay_002", "confirm-cash"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
